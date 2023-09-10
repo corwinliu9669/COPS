@@ -41,10 +41,15 @@ def cal_un_woy(logit):
     covariance = np.matmul((logit-np.mean(logit, axis=0, keepdims=True)).transpose()[1:, :], (logit-np.mean(logit, axis=0, keepdims=True))[:, 1:])/(len(logit)-1)
     
     logit =logit -np.max(logit, 1, keepdims=True)
-    pred = np.mean(np.exp(logit)/np.sum(np.exp(logit), 1, keepdims=True), 0)[1:]
+    pred = np.mean(np.exp(logit)/np.sum(np.exp(logit), 1,  keepdims=True), 0)[1:]
 
     pred_ = np.reshape(pred, (len(pred), 1))
     psi = np.diag(pred) - np.matmul(pred_, pred_.transpose())
+   # print(logit.shape)
+   # print(pred.shape)
+   # print(psi.shape)
+   # print(covariance.shape)
+   # ssss
     met = np.trace(np.matmul(psi, covariance))
     return met
 
@@ -82,14 +87,16 @@ if args.dataset == "cifar100":
     for k in range(len(train_lab_oh)):
         train_lab_oh[k, train_lab[k]] = 1
     train_logit = np.load(os.path.join("cifar100_npy", "train_UN_2_raw.npy"))
-    train_pseudo_label = np.argmax(np.mean(train_logit, 0), 1)
-    print(train_pseudo_label)
-    for j in range(100):
-        print(len([i for i in range(len(train_pseudo_label)) if train_pseudo_label[i]==j]))
+    # train_pseudo_label = np.argmax(np.mean(train_logit, 0), 1)
+    # print(train_pseudo_label)
+    # for j in range(100):
+    #     print(len([i for i in range(len(train_pseudo_label)) if train_pseudo_label[i]==j]))
 
     train_logit = train_logit.transpose((1,0,2))
     train_metric = np.zeros((len(train_logit), ))
+   # print(len(train_logit))
     for k in range(len(train_logit)):
+    #    print(k)
         train_metric[k] = cal_un_woy(train_logit[k] )
 
 
@@ -111,11 +118,11 @@ elif args.dataset == "cifar":
     test_lab = np.load("cifar_npy/train_Y_1.npy")
     real_test_data =np.load( "cifar_npy/test_X.npy")
     real_test_lab = np.load("cifar_npy/test_Y.npy")
-    train_logit = np.load(os.path.join('cifar100_npy', "train_UN_2_raw.npy"))
-    train_pseudo_label = np.argmax(np.mean(train_logit, 0), 1)
-    print(train_pseudo_label)
-    for j in range(10):
-        print(len([i for i in range(len(train_pseudo_label)) if train_pseudo_label[i]==j]))
+    train_logit = np.load(os.path.join('cifar_npy', "train_UN_2_raw.npy"))
+    # train_pseudo_label = np.argmax(np.mean(train_logit, 0), 1)
+    # print(train_pseudo_label)
+    # for j in range(10):
+    #     print(len([i for i in range(len(train_pseudo_label)) if train_pseudo_label[i]==j]))
 
     train_logit = train_logit.transpose((1,0,2))
     train_metric = np.zeros((len(train_logit), ))
@@ -144,7 +151,7 @@ elif args.dataset == "cifar10_aggre":
     real_test_lab = np.load("cifar_noise_npy/test_Y.npy")
     train_logit = np.load(os.path.join("cifar_aggre_npy", "train_UN_2_raw.npy"))
     train_logit = train_logit.transpose((1,0,2))
-    train_logit = train_logit.transpose((1,0,2))
+    # train_logit = train_logit.transpose((1,0,2))
     train_metric = np.zeros((len(train_logit), ))
     for k in range(len(train_logit)):
         train_metric[k] = cal_un_woy(train_logit[k] )
@@ -160,7 +167,6 @@ train_metric = np.sqrt(train_metric)
 if args.test_mode == 'random':
     train_ind = []
     train_loss_weight = []
-    # for k in range(10):
     ind =  [i for i in range(len(train_metric))]
     tmp_ind = np.random.choice(ind, size=(args.sample_number*class_n, ),replace=False)
     train_loss_weight.append(train_metric[tmp_ind])
@@ -170,7 +176,6 @@ elif args.test_mode == 'oracle_sampling_cut':
     train_metric_ = np.clip(train_metric,a_min=0, a_max=args.constant_1)
     train_ind = []
     train_loss_weight = []
-
     ind =  [i for i in range(len(train_metric)) ]
     tmp_ind = np.random.choice(ind, size=(args.sample_number*class_n, ),replace=False, p=(train_metric_[ind])/np.sum((train_metric_[ind])))
     train_loss_weight.append(train_metric[tmp_ind])
@@ -183,6 +188,10 @@ elif args.test_mode == 'oracle_sampling_cut':
 #####################################
 train_data = train_data[train_ind]
 train_lab = train_lab[train_ind]
+
+train_loss_weight = np.concatenate(train_loss_weight)
+
+
 ################################
 
 
@@ -264,7 +273,7 @@ def test(epoch, net,testloader, print_name):
             total += targets.size(0)
             correct += predicted.eq(targets).sum().item()
     acc = 100.*correct/total
-    print(print_name, test_loss/len(testloader))
+    # print(print_name, test_loss/len(testloader))
     print(print_name + ' Acc : ', acc)
     return acc
 

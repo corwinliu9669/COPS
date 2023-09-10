@@ -79,7 +79,7 @@ if args.dataset == "cifar":
     train_lab_oh = np.zeros((len(train_lab), 10))
     for k in range(len(train_lab_oh)):
         train_lab_oh[k, train_lab[k]] = 1
-    train_logit = np.load(os.path.join('cifar100_npy', "train_UN_2_raw.npy"))
+    train_logit = np.load(os.path.join('cifar_npy', "train_UN_2_raw.npy"))
     train_logit = train_logit.transpose((1,0,2))
     train_metric = np.zeros((len(train_logit), ))
     for k in range(len(train_logit)):
@@ -255,7 +255,7 @@ def test(epoch, net,testloader, print_name):
             total += targets.size(0)
             correct += predicted.eq(targets).sum().item()
     acc = 100.*correct/total
-    print(print_name, test_loss/len(testloader))
+    # print(print_name, test_loss/len(testloader))
     print(print_name + ' Acc : ', acc)
     return acc
 
