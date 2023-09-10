@@ -187,21 +187,20 @@ sample number 1000
 To run the uniform basline, please run the following code, the result is 19.01
 #### Uniform Baseline  
 ```bash
-python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet20 --test_mode random --sample_number 30 --loss_type base --epochs 150
+python retraining_imdb.py --seed 1 --lr 1e-3 --dataset imdb --model gru --test_mode random --sample_number 1000 --loss_type base --epochs 20
 ```
 
 To run the COPS with y, please run the following code, the result is 20.81
 
 #### COPS With Y
 ```bash
-python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 30 --loss_type reweight_clip --epochs 150
+python retraining_imdb.py --seed 1 --lr 1e-3 --un_type wy --dataset imdb --model gru --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 1000 --loss_type reweight_clip --epochs 150
 ```
 To run the COPS without y, please run the following code, the result is 22.49
 #### COPS Without Y
 ```bash
-python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 30 --loss_type reweight_clip --epochs 150
+python retraining_imdb.py --seed 1 --lr 1e-3 --un_type woy --dataset imdb --model gru --test_mode oracle_sampling_cut_whole --constant_1 0.005 --constant_2 10 --sample_number 1000 --loss_type reweight_clip --epochs 20
 ```
-
 
 
 # Contact Information

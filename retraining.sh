@@ -27,3 +27,10 @@ python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet2
 ##### cops woy
 python retraining_woy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 30 --loss_type reweight_clip  --epochs 150 --un_folder cifar100_npy > retrain_logs/cifar100_cops_woy.log
 
+# imdb
+### n sample 1000
+#### random
+python retraining_imdb.py --seed 1 --lr 1e-3 --dataset imdb --model gru --test_mode random --sample_number 1000 --loss_type base --epochs 20
+#### cops wy
+
+#### cops woy
