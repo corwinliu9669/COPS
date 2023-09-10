@@ -31,7 +31,7 @@ parser.add_argument('--weight_folder', type=str, default='active_weight_binary/'
 parser.add_argument('--weight_name', type=str, default='active_weight.pth') 
 parser.add_argument('--constant_1', type=float, default=0) 
 parser.add_argument('--constant_2', type=float, default=0.3) 
-parser.add_argument('--un_folder', type=str, default='imdb_npy_bert_sent') 
+parser.add_argument('--un_folder', type=str, default='imdb_npy') 
 parser.add_argument('--un_type', type=str, default='woy',help='woy/wy') 
 args = parser.parse_args()
 
