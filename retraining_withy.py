@@ -32,10 +32,7 @@ parser.add_argument('--constant_1', type=float, default=100)
 parser.add_argument('--constant_2', type=float, default=0) 
 parser.add_argument('--un_folder', type=str, default='cifar_npy') 
 args = parser.parse_args()
-pic_path = "./pics_" + args.dataset
-os.makedirs(pic_path, exist_ok=True)
-args.pic_name = os.path.join(pic_path, args.weight_name.replace(".pth", ".png"))
-pred_base_path = "binary_prediction/"
+
 
 
 def cal_un_wy(logit, label):

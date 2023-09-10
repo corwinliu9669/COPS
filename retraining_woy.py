@@ -33,9 +33,6 @@ parser.add_argument('--constant_1', type=float, default=0.005)
 parser.add_argument('--constant_2', type=float, default=0) 
 parser.add_argument('--un_folder', type=str, default='cifar_npy') 
 args = parser.parse_args()
-pic_path = "./pics_" + args.dataset
-os.makedirs(pic_path, exist_ok=True)
-args.pic_name = os.path.join(pic_path, args.weight_name.replace(".pth", ".png"))
 
 def cal_un_woy(logit):
     covariance = np.matmul((logit-np.mean(logit, axis=0, keepdims=True)).transpose()[1:, :], (logit-np.mean(logit, axis=0, keepdims=True))[:, 1:])/(len(logit)-1)
