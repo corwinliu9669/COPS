@@ -131,5 +131,5 @@ class BiGRU(nn.Module):
         out = self.linear(concat_out)
         return out
     
-model = BiGRU()
-print(model)
+# model = BiGRU()
+# print(model)

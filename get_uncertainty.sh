@@ -6,3 +6,7 @@ python uncertainty_generation.py --dataset cifar10_aggre --lr 0.1 --model resnet
 
 # cifar100
 python uncertainty_generation.py --dataset cifar100 --lr 0.1 --model resnet20 --model_num 10 --num_classes 100 --epochs 100 --weight_folder cifar100_resnet20_uncertainty_weight --npy_folder cifar100_npy
+
+# IMDB
+
+python uncertainty_generation_imdb.py --dataset imdb --lr 1e-3 --model gru --model_num 10  --epochs 20  --weight_folder imdb_uncertainty_weight --npy_folder imdb_npy

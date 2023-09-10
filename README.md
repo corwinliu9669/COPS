@@ -9,6 +9,7 @@
 Our code works with the following environment:
 * torch==2.0.1
 * torchvision==0.15.2
+* torchtext==0.15.2
 * PIL==9.4.0
 
 To install the necessary packages for the project, please run: 
@@ -69,6 +70,8 @@ run the following code
 ```bash
 python split_data/cifar100_split.py
 ```
+### For IMDB 
+the split code is combined with training code
 ## Step 2 Run Uncertainty Generation
 To generate the uncertainty for all the dataset
 ### To run all the split at once
@@ -85,16 +88,21 @@ python uncertainty_generation.py --dataset cifar10 --lr 0.1 --model resnet20 --m
 ### For CIFAR10-N
 run the following code
 ```bash
-python uncertainty_generation.py --dataset cifar10_aggre --lr 0.1 --model resnet20 --model_num 10 --num_classes 10 --epochs cifar10_aggre --weight_folder cifar10_resnet20_uncertainty_weight --npy_folder cifar_aggre_npy
+python uncertainty_generation.py --dataset cifar10_aggre --lr 0.1 --model resnet20 --model_num 10 --num_classes 10 --epochs 100 --weight_folder cifar10_resnet20_uncertainty_weight --npy_folder cifar_aggre_npy
 ```
 
 
 ### For CIFAR100
 run the following code
 ```bash
-python uncertainty_generation.py --dataset cifar100 --lr 0.1 --model resnet20 --model_num 10 --num_classes 100 --epochs cifar10_aggre --weight_folder cifar100_resnet20_uncertainty_weight --npy_folder cifar100_npy
+python uncertainty_generation.py --dataset cifar100 --lr 0.1 --model resnet20 --model_num 10 --num_classes 100 --epochs 100  --weight_folder cifar100_resnet20_uncertainty_weight --npy_folder cifar100_npy
 ```
 
+### For IMDB
+run the following code
+```bash
+python uncertainty_generation_imdb.py --lr 1e-3 --model gru --model_num 10  --epochs 20  --weight_folder imdb_uncertainty_weight --npy_folder imdb_npy
+```
 ## Step 3 Run Retraining
 ### For all
 To get the results of three datasets, please run the following code
@@ -106,23 +114,23 @@ sh retraining.sh
 sample number 300
 
 
-To run the uniform basline, please run the following code, the result is 58.93
+To run the uniform basline, please run the following code, the result is 57.97
 #### Uniform Baseline  
 ```bash
-python retraining_withy.py --seed 1 --dataset cifar --model resnet20 --test_mode random --sample_number 300 --loss_type base --epochs 150
+python retraining_withy.py  --seed 1 --lr 1e-3 --dataset cifar --model resnet20 --test_mode random --sample_number 300 --loss_type base --epochs 150
 ```
 
-To run the COPS with y, please run the following code, the result is 61.98
+To run the COPS with y, please run the following code, the result is 61.82
 #### COPS With Y
 
 ```bash
-python retraining_withy.py --seed 1 --dataset cifar --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 300 --loss_type reweight_clip --epochs 150
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 300 --loss_type reweight_clip --epochs 150
 ```
 
-To run the COPS without y, please run the following code, the result is 
+To run the COPS without y, please run the following code, the result is 61.22
 #### COPS Without Y
 ```bash
-python retraining_withy.py --seed 1 --dataset cifar --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 300 --loss_type reweight_clip --epochs 150
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 300 --loss_type reweight_clip --epochs 150
 ```
 
 
@@ -132,46 +140,69 @@ sample number 300
 
 
 
-To run the uniform basline, please run the following code, the result is 55.9
+To run the uniform basline, please run the following code, the result is 57.49
 #### Uniform Baseline  
 ```bash
-python retraining_withy.py --seed 1 --dataset cifar10_aggre --model resnet20 --test_mode random --sample_number 300 --loss_type base --epochs 150
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar10_aggre --model resnet20 --test_mode random --sample_number 300 --loss_type base --epochs 150
 ```
 
-To run the COPS with y, please run the following code, the result is 59.79
+To run the COPS with y, please run the following code, the result is 60.73
 #### COPS With Y
 ```bash
-python retraining_withy.py --seed 1 --dataset cifar10_aggre --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 300 --loss_type reweight_clip --epochs 150
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar10_aggre --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 300 --loss_type reweight_clip --epochs 150
 ```
-To run the COPS without y, please run the following code, the result is 
+To run the COPS without y, please run the following code, the result is 58.09
 #### COPS Without Y
 ```bash
-python retraining_withy.py --seed 1 --dataset cifar10_aggre --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 300 --loss_type reweight_clip --epochs 150
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar10_aggre --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 300 --loss_type reweight_clip --epochs 150
 ```
 
 ### CIFAR100
 
 sample number 300
 
-
-
-To run the uniform basline, please run the following code, the result is 19.41
+To run the uniform basline, please run the following code, the result is 19.01
 #### Uniform Baseline  
 ```bash
-python retraining_withy.py --seed 1 --dataset cifar100 --model resnet20 --test_mode random --sample_number 30 --loss_type base --epochs 150
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet20 --test_mode random --sample_number 30 --loss_type base --epochs 150
 ```
 
-To run the COPS with y, please run the following code, the result is 22.22
+To run the COPS with y, please run the following code, the result is 20.81
 
 #### COPS With Y
 ```bash
-python retraining_withy.py --seed 1 --dataset cifar100 --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 30 --loss_type reweight_clip --epochs 150
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 30 --loss_type reweight_clip --epochs 150
 ```
-To run the COPS without y, please run the following code, the result is 
+To run the COPS without y, please run the following code, the result is 22.49
 #### COPS Without Y
 ```bash
-python retraining_withy.py --seed 1 --dataset cifar100 --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 30 --loss_type reweight_clip --epochs 150
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 30 --loss_type reweight_clip --epochs 150
 ```
+
+
+### IMDB
+
+sample number 1000
+
+To run the uniform basline, please run the following code, the result is 19.01
+#### Uniform Baseline  
+```bash
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet20 --test_mode random --sample_number 30 --loss_type base --epochs 150
+```
+
+To run the COPS with y, please run the following code, the result is 20.81
+
+#### COPS With Y
+```bash
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 30 --loss_type reweight_clip --epochs 150
+```
+To run the COPS without y, please run the following code, the result is 22.49
+#### COPS Without Y
+```bash
+python retraining_withy.py --seed 1 --lr 1e-3 --dataset cifar100 --model resnet20 --test_mode oracle_sampling_cut --constant_1 0.005 --constant_2 10 --sample_number 30 --loss_type reweight_clip --epochs 150
+```
+
+
 
 # Contact Information
 
