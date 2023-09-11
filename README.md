@@ -30,7 +30,7 @@ Here we can download CIFAR10, CIFAR10-N, CIFAR100
 The following parameters are used for training 
 * `lr`: learning rate
 * `epochs`: training epochs
-* `dataset`: which dataset to use
+* `dataset`: which dataset to use, `cifar' for CIFAR10
 
 
 The following parameters are used for uncertainty generation 
@@ -39,7 +39,7 @@ The following parameters are used for uncertainty generation
 
 The following parameters are used for sampling
 
-* `test_mode` : sampling method , cops or random
+* `test_mode` : sampling method, cops or random
 * `sample_number` : sampling number per class
 * `loss_type` : base for vanilla cross entropy, reweight clip for weighting cross entropy
 * `constant_1` : clip threshold for sampling
@@ -74,12 +74,12 @@ python split_data/cifar100_split.py
 the split code is combined with training code
 ## Step 2 Run Uncertainty Generation
 To generate the uncertainty for all the dataset
-### To run all the split at once
+### To run uncertainty for all datasets including (CIFAR10...) at once
 ```bash
 sh get_uncertainty.sh
 ```
 
-###  CIFAR10
+###  To run uncertainty for CIFAR10
 run the following code
 ```bash
 python uncertainty_generation.py --dataset cifar10 --lr 0.1 --model resnet20 --model_num 10 --num_classes 10 --epochs 100 --weight_folder cifar10_resnet20_uncertainty_weight --npy_folder cifar_npy
@@ -103,7 +103,7 @@ run the following code
 ```bash
 python uncertainty_generation_imdb.py --lr 1e-3 --model gru --model_num 10  --epochs 20  --weight_folder imdb_uncertainty_weight --npy_folder imdb_npy
 ```
-## Step 3 Run Retraining
+## Step 3 Run Sampling and Training
 ### For all
 To get the results of three datasets, please run the following code
 ```bash
