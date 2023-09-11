@@ -1,6 +1,6 @@
-# Optimal Sample Selection Through Uncertainty Estimation and Its Application in Deep Learning(COPS) 
-
-## Paper Link  [arxiv](https://arxiv.org/abs/2309.02476)
+# Optimal Sample Selection Through Uncertainty Estimation and Its Application in Deep Learning 
+## Introduction
+We explore sub-sampling techniques on large datasets for training deep models. We propose an optimal sampling strategy, COPS (unCertainty based OPtimal Sub-sampling), that minimizes expected generalization loss for coreset selection and active learning in linear softmax regression. Unlike existing methods, our approach avoids the need for computing the inverse of the covariance matrix by leveraging neural network outputs. We also address the proposed method's sensitivity to model mis-specification in low-density regions through empirical analysis. Our methods consistently outperform baselines across diverse datasets and architectures, demonstrating their superior performance and effectiveness. Paper Link is here on [arxiv](https://arxiv.org/abs/2309.02476)
 
 # Requirements
 
