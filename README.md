@@ -30,7 +30,7 @@ Here we can download CIFAR10, CIFAR10-N, CIFAR100
 The following parameters are used for training 
 * `lr`: learning rate
 * `epochs`: training epochs
-* `dataset`: which dataset to use, `cifar' for CIFAR10
+* `dataset`: which dataset to use, `cifar' for CIFAR10, `cifar10_aggre' for CIFAR10-N, `cifar100' for CIFAR100, `imdb' for IMDB
 
 
 The following parameters are used for uncertainty generation 
@@ -39,7 +39,7 @@ The following parameters are used for uncertainty generation
 
 The following parameters are used for sampling
 
-* `test_mode` : sampling method, cops or random
+* `test_mode` : sampling method, oracle_sampling_cut for cops or random for uniform
 * `sample_number` : sampling number per class
 * `loss_type` : base for vanilla cross entropy, reweight clip for weighting cross entropy
 * `constant_1` : clip threshold for sampling
@@ -48,7 +48,7 @@ The following parameters are used for sampling
 
 # Quick Start (For Reproducing Results)
 ## Step 1 Split Data into Probe Set and Sampling Set
-### To run all the split at once
+### To split data for all datasets including (CIFAR10...) at once
 run the following code
 ```bash
 sh split_data.sh
@@ -73,7 +73,7 @@ python split_data/cifar100_split.py
 ### For IMDB 
 the split code is combined with training code
 ## Step 2 Run Uncertainty Generation
-To generate the uncertainty for all the dataset
+
 ### To run uncertainty for all datasets including (CIFAR10...) at once
 ```bash
 sh get_uncertainty.sh
@@ -104,7 +104,8 @@ run the following code
 python uncertainty_generation_imdb.py --lr 1e-3 --model gru --model_num 10  --epochs 20  --weight_folder imdb_uncertainty_weight --npy_folder imdb_npy
 ```
 ## Step 3 Run Sampling and Training
-### For all
+### To run sampling and training for all datasets including (CIFAR10...) at once
+
 To get the results of three datasets, please run the following code
 ```bash
 sh retraining.sh
