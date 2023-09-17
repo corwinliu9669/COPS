@@ -48,11 +48,7 @@ The following parameters are used for sampling
 
 # Quick Start (For Reproducing Results)
 ## Step 1 Split Data into Probe Set and Sampling Set
-### To split data for all datasets including (CIFAR10...) at once
-run the following code
-```bash
-sh split_data.sh
-```
+
 ###  CIFAR10
 run the following code
 ```bash
